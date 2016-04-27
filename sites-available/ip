@@ -1,0 +1,8 @@
+server {
+	server_name 5.135.154.206; # @TODO add IPv6 when deployed
+
+	include snippets/misc/listen-80.conf; # ipv{4,6}
+	include snippets/hardening/headers.conf;
+
+	return 301 https://vsund.de$request_uri;
+}

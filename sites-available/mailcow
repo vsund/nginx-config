@@ -1,0 +1,169 @@
+server {
+	server_name autodiscover.vsund.de
+	            autodiscover.valentin-sundermann.de
+	            autodiscover.sundermann.eu;
+
+	include snippets/misc/listen-80.conf; # ipv{4,6} + http
+	include snippets/hardening/headers.conf;
+
+	return 301 https://$server_name$request_uri;
+}
+
+server {
+	server_name autodiscover.vsund.de
+	            autodiscover.valentin-sundermann.de
+	            autodiscover.sundermann.eu;
+
+	include snippets/misc/listen.conf; # ipv{4,6} + http{,s}
+
+	include snippets/tls/tls-vsund-mail.conf;
+	include snippets/hardening/headers-tls.conf;
+	include snippets/rewrites/no-www.conf;
+	include snippets/misc/custom-errorpages.conf;
+
+	root /data/www/mailcow/zpush;
+
+	index index.php;
+
+	access_log /var/log/nginx/mailcow/access.log main;
+	error_log /var/log/nginx/mailcow/error.log warn;
+
+	rewrite (?i)^/autodiscover/autodiscover\.xml$ /autodiscover/autodiscover.php;
+
+	location / {
+		# First attempt to serve request as file, then
+		# as directory, then index.php, then fall back to displaying a 404.
+		try_files $uri $uri/ /index.php =404;
+	}
+
+	location /.well-known/acme-challenge/ { 
+		root /data/www/mailcow/mail;
+	}
+
+	location /Microsoft-Server-ActiveSync {
+		rewrite ^(.*)$  /index.php last;
+	}
+
+	location ~ /(\.ht|Core|Specific) {
+		deny all;
+		return 404;
+	}
+
+	include snippets/apps/php-fpm.conf;
+}
+
+
+
+
+server {
+	server_name mail.vsund.de smtp.vsund.de imap.vsund.de pop3.vsund.de
+	            mail.valentin-sundermann.de smtp.valentin-sundermann.de imap.valentin-sundermann.de pop3.valentin-sundermann.de
+	            mail.sundermann.eu smtp.sundermann.eu imap.sundermann.eu pop3.sundermann.eu;
+
+	include snippets/misc/listen-80.conf; # ipv{4,6} + http
+	include snippets/hardening/headers.conf;
+
+	return 301 https://$server_name$request_uri;
+}
+
+server {
+	#server_name mail.vsund.de
+	#            mail.valentin-sundermann.de
+	#            mail.sundermann.eu;
+	server_name mail.vsund.de smtp.vsund.de imap.vsund.de pop3.vsund.de
+	            mail.valentin-sundermann.de smtp.valentin-sundermann.de imap.valentin-sundermann.de pop3.valentin-sundermann.de
+	            mail.sundermann.eu smtp.sundermann.eu imap.sundermann.eu pop3.sundermann.eu;
+
+	include snippets/misc/listen.conf; # ipv{4,6} + http{,s}
+
+	include snippets/tls/tls-vsund-mail.conf;
+	include snippets/hardening/headers-tls.conf;
+	include snippets/rewrites/no-www.conf;
+	include snippets/misc/custom-errorpages.conf;
+
+	root /data/www/mailcow/mail;
+
+	index index.html index.htm index.php;
+
+	access_log /var/log/nginx/mailcow/access.log main;
+	error_log /var/log/nginx/mailcow/error.log warn;
+
+	client_max_body_size 25m;
+	error_page 502 /redir.html;
+
+	location /redir.html {
+		return 301 /admin.php;
+	}
+
+	location ~ ^/(rc/logs|pfadmin/ADDITIONS)/ {
+		deny all;
+	}
+
+	location = /favicon.ico {
+		log_not_found off;
+		access_log off;
+	}
+
+	location = /robots.txt {
+		allow all;
+		log_not_found off;
+		access_log off;
+	}
+
+	location / {
+		# First attempt to serve request as file, then
+		# as directory, then index.php, then fall back to displaying a 404.
+		try_files $uri $uri/ /index.php =404;
+	}
+
+	include snippets/cache/static.conf;
+
+	include snippets/apps/php-fpm.conf;
+}
+
+
+
+
+
+
+#server {
+#	server_name dav.vsund.de
+#	       dav.valentin-sundermann.de
+#	       dav.sundermann.eu;
+#
+#	include snippets/misc/listen-all.conf; # ipv{4,6} + http{,s}
+#
+#	include snippets/ssl/ssl-vsund-mail.conf;
+#	include snippets/rewrites/force-ssl.conf;
+#	include snippets/misc/hardening.conf;
+#	include snippets/rewrites/no-www.conf;
+#
+#	root /data/www/mailcow/dav;
+#
+#	index server.php;
+#
+#	access_log /var/log/nginx/mailcow/access.log main;
+#	error_log /var/log/nginx/mailcow/error.log warn;
+#
+#	rewrite ^/.well-known/caldav /server.php redirect;
+#	rewrite ^/.well-known/carddav /server.php redirect;
+#
+#	location / {
+#		limit_except GET POST HEAD OPTIONS {
+#			deny all;
+#		}
+#
+#		try_files $uri $uri/ /server.php?$args;
+#	}
+#
+#	location /.well-known/acme-challenge/ {
+#		root /data/www/mailcow/mail;
+#	}
+#
+#	location ~ /(\.ht|Core|Specific) {
+#		deny all;
+#		return 404;
+#	}
+#
+#	include snippets/apps/php-fpm.conf;
+#}

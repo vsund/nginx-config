@@ -1,0 +1,63 @@
+server {
+	server_name cloud.vsund.de
+	            cloud.valentin-sundermann.de;
+
+	include snippets/misc/listen-80.conf; # ipv{4,6} + http
+	include snippets/hardening/headers.conf;
+
+	return 301 https://$server_name$request_uri;
+}
+
+server {
+	server_name cloud.vsund.de
+	            cloud.valentin-sundermann.de
+	            cloud6ysjz2v7yt7.onion;
+
+	include snippets/misc/listen.conf; # ipv{4,6} + http{,s}
+	listen 127.0.0.1:80; # tor onion service
+
+	include snippets/tls/tls-vsund-cloud.conf;
+	include snippets/hardening/headers-tls.conf;
+	include snippets/rewrites/no-www.conf;
+	include snippets/misc/custom-errorpages.conf;
+
+	root /data/owncloud;
+
+	index index.php;
+
+	access_log /var/log/nginx/owncloud/access.log main;
+	error_log /var/log/nginx/owncloud/error.log warn;
+
+	error_page 403 /core/templates/403.php;
+	error_page 404 /core/templates/404.php;
+
+	client_max_body_size 10G;
+	fastcgi_buffers 64 4K;
+
+	rewrite ^/caldav(.*)$ /remote.php/caldav$1 redirect;
+	rewrite ^/carddav(.*)$ /remote.php/carddav$1 redirect;
+	rewrite ^/webdav(.*)$ /remote.php/webdav$1 redirect;
+
+	location ~ ^/(data|config|\.ht|db_structure\.xml|README) {
+		deny all;
+	}
+
+	location / {
+		# The following 2 rules are only needed with webfinger
+		rewrite ^/.well-known/host-meta /public.php?service=host-meta last;
+		rewrite ^/.well-known/host-meta.json /public.php?service=host-meta-json last;
+		rewrite ^/.well-known/carddav /remote.php/carddav/ redirect;
+		rewrite ^/.well-known/caldav /remote.php/caldav/ redirect;
+		rewrite ^(/core/doc/[^\/]+/)$ $1/index.html;
+
+		# First attempt to serve request as file, then
+		# as directory, then index.php, then fall back to displaying a 404.
+		try_files $uri $uri/ /index.php =404;
+	}
+
+	include snippets/apps/php-fpm.conf;
+
+	include snippets/cache/extension.conf;
+
+	include snippets/hardening/denied-locations.conf;
+}

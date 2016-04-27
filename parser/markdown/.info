@@ -1,0 +1,19 @@
+parser: https://github.com/erusev/parsedown
+css:    https://github.com/sindresorhus/github-markdown-css
+
+
+nginx config:
+
+        location ~ \.md$ {
+                try_files $uri =404;
+                fastcgi_pass    unix:/var/run/php5-fpm.sock;
+                fastcgi_param   DOCUMENT_ROOT    $document_root;
+                fastcgi_param   SCRIPT_NAME      $uri;
+                fastcgi_param   SCRIPT_FILENAME  /etc/nginx/parser/markdown/md.php;
+                include snippets/misc/params/fastcgi_params;
+        }
+
+        location ~ ^(.*)\.md/raw$ {
+                try_files $1.md =404;
+                default_type text/plain;
+        }

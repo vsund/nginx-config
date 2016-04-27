@@ -1,0 +1,33 @@
+server {
+	server_name keyserver.vsund.de keyserver.valentin-sundermann.de asdf.onion
+	server_name *.sks-keyservers.net;
+	server_name *.pool.sks-keyservers.net;
+	server_name keys.gnupg.net;
+
+	include snippets/misc/listen-all.conf; # ipv{4,6} + http{,s}
+	listen 127.0.0.1:80; # tor onion service
+	listen 163.172.29.20:11371 default_server;
+	#listen [--IPv6-Address--]:11371 default_server;
+
+	include snippets/ssl/ssl-vsund-keyserver.conf;
+	include snippets/rewrites/force-ssl.conf;
+	include snippets/misc/hardening.conf;
+
+	root /data/www/keyserver/public_html;
+
+	rewrite ^/stats /pks/lookup?op=stats;
+	rewrite ^/s/(.*) /pks/lookup?search=$1;
+	rewrite ^/search/(.*) /pks/lookup?search=$1;
+	rewrite ^/g/(.*) /pks/lookup?op=get&search=$1;
+	rewrite ^/get/(.*) /pks/lookup?op=get&search=$1;
+	rewrite ^/d/(.*) /pks/lookup?op=get&options=mr&search=$1;
+	rewrite ^/download/(.*) /pks/lookup?op=get&options=mr&search=$1;
+
+	location /pks {
+		proxy_pass http://127.0.0.1:11371;
+		proxy_pass_header Server;
+		add_header Via "1.1 --keyserver-hostname--:11371 (nginx)";
+		proxy_ignore_client_abort on;
+		client_max_body_size 8m;
+	}
+}
