@@ -32,7 +32,6 @@ server {
 	}
 
 	include snippets/apps/goaccess.conf;
-	include snippets/apps/gogs.conf;
 	include snippets/apps/netdata.conf;
 	include snippets/apps/md.conf;
 	include snippets/apps/php-fpm.conf;
