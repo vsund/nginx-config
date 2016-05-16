@@ -1,5 +1,5 @@
 server {
-	server_name 5.135.154.206; # @TODO add IPv6 when deployed
+	server_name 163.172.29.20; # @TODO add IPv6 when deployed
 
 	include snippets/misc/listen-80.conf; # ipv{4,6}
 	include snippets/hardening/headers.conf;
