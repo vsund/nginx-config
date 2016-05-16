@@ -25,6 +25,10 @@ server {
 
 	index index.php index.html index.htm index.md;
 
+	location /git {
+	        return 301 https://git.vsund.de;
+	}
+
 	location / {
 		# First attempt to serve request as file, then
 		# as directory, then fall back to displaying a 404.
