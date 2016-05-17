@@ -26,7 +26,7 @@ server {
 	index index.php index.html index.htm index.md;
 
 	location /git {
-	        return 301 https://git.vsund.de;
+		return 301 https://git.vsund.de;
 	}
 
 	location / {
