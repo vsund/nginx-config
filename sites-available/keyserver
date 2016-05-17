@@ -47,6 +47,10 @@ server {
 		client_max_body_size 8m;
 	}
 
+	location /assets {
+		add_header Access-Control-Allow-Origin "*";
+	}
+
 	location / {
 		# First attempt to serve request as file, then
 		# as directory, then fall back to displaying a 404.
