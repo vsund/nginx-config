@@ -1,17 +1,33 @@
 server {
-	server_name keyserver.vsund.de keyserver.valentin-sundermann.de asdf.onion
-	server_name *.sks-keyservers.net;
-	server_name *.pool.sks-keyservers.net;
-	server_name keys.gnupg.net;
+	server_name keyserver.vsund.de
+	            keyserver.valentin-sundermann.de;
 
-	include snippets/misc/listen-all.conf; # ipv{4,6} + http{,s}
+	include snippets/misc/listen-80.conf; # ipv{4,6} + http
+	include snippets/hardening/headers.conf;
+
+	return 301 https://$server_name$request_uri;
+}
+
+server {
+	server_name keyserver.vsund.de
+	            keyserver.valentin-sundermann.de
+	            sfuulriypdms4mnl.onion;
+	server_name *.sks-keyservers.net
+	            *.pool.sks-keyservers.net
+	            keys.gnupg.net
+	            pgp.ipfire.org;
+
+	include snippets/misc/listen-443.conf; # ipv{4,6} + https
 	listen 127.0.0.1:80; # tor onion service
-	listen 163.172.29.20:11371 default_server;
-	#listen [--IPv6-Address--]:11371 default_server;
 
-	include snippets/ssl/ssl-vsund-keyserver.conf;
-	include snippets/rewrites/force-ssl.conf;
-	include snippets/misc/hardening.conf;
+	# Reverse proxy for local sks instance
+	listen 11371;
+	listen [::]:11371;
+
+	include snippets/tls/tls-vsund-keyserver.conf;
+	include snippets/hardening/headers-tls.conf;
+	include snippets/rewrites/no-www.conf;
+	include snippets/misc/custom-errorpages.conf;
 
 	root /data/www/keyserver/public_html;
 
@@ -24,10 +40,18 @@ server {
 	rewrite ^/download/(.*) /pks/lookup?op=get&options=mr&search=$1;
 
 	location /pks {
-		proxy_pass http://127.0.0.1:11371;
+		proxy_pass http://127.0.0.1:21371;
 		proxy_pass_header Server;
-		add_header Via "1.1 --keyserver-hostname--:11371 (nginx)";
+		add_header Via "1.1 keyserver.vsund.de:11371 (nginx)";
 		proxy_ignore_client_abort on;
 		client_max_body_size 8m;
 	}
+
+	location / {
+		# First attempt to serve request as file, then
+		# as directory, then fall back to displaying a 404.
+		try_files $uri $uri/ =404;
+	}
+
+	include snippets/hardening/denied-locations.conf;
 }
