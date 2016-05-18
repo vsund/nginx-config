@@ -11,6 +11,7 @@ server {
 server {
 	server_name cloud.vsund.de
 	            cloud.valentin-sundermann.de
+	            cloud.sirius.vsund.local
 	            cloud6ysjz2v7yt7.onion;
 
 	include snippets/misc/listen.conf; # ipv{4,6} + http{,s}

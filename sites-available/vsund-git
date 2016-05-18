@@ -15,6 +15,7 @@ server {
 server {
 	server_name git.vsund.de
 	            git.valentin-sundermann.de
+	            git.sirius.vsund.local
 	            git4ago5hmytesja.onion;
 
 	include snippets/misc/listen.conf; # ipv{4,6} + http{,s}

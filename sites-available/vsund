@@ -11,6 +11,7 @@ server {
 server {
 	server_name vsund.de www.vsund.de
 	            valentin-sundermann.de www.valentin-sundermann.de
+	            sirius.vsund.local
 	            vsund3pngvvsniz4.onion;
 
 	include snippets/misc/listen.conf; # ipv{4,6} + http{,s}
