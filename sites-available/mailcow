@@ -67,9 +67,6 @@ server {
 }
 
 server {
-	#server_name mail.vsund.de
-	#            mail.valentin-sundermann.de
-	#            mail.sundermann.eu;
 	server_name mail.vsund.de smtp.vsund.de imap.vsund.de pop3.vsund.de
 	            mail.valentin-sundermann.de smtp.valentin-sundermann.de imap.valentin-sundermann.de pop3.valentin-sundermann.de
 	            mail.sundermann.eu smtp.sundermann.eu imap.sundermann.eu pop3.sundermann.eu;
