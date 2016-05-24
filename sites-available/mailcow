@@ -58,8 +58,7 @@ server {
 server {
 	server_name mail.vsund.de smtp.vsund.de imap.vsund.de pop3.vsund.de
 	            mail.valentin-sundermann.de smtp.valentin-sundermann.de imap.valentin-sundermann.de pop3.valentin-sundermann.de
-	            mail.sundermann.eu smtp.sundermann.eu imap.sundermann.eu pop3.sundermann.eu
-	            mail.sirius.vsund.local;
+	            mail.sundermann.eu smtp.sundermann.eu imap.sundermann.eu pop3.sundermann.eu;
 
 	include snippets/misc/listen-80.conf; # ipv{4,6} + http
 	include snippets/hardening/headers.conf;
