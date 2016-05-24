@@ -5,5 +5,7 @@ server {
 	include snippets/misc/listen-80.conf; # ipv{4,6}
 	include snippets/hardening/headers.conf;
 
-	return 301 https://vsund.de$request_uri;
+	location / {
+		return 301 https://$server_name$request_uri;
+	}
 }
