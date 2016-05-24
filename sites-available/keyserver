@@ -6,6 +6,8 @@ server {
 	include snippets/hardening/headers.conf;
 	include snippets/misc/acme.conf;
 
+	access_log /var/log/nginx/keyserver/access.log anonymized;
+	error_log /dev/null;
 
 	location / {
 		return 301 https://$server_name$request_uri;
@@ -27,6 +29,9 @@ server {
 	# Reverse proxy for local sks instance
 	listen 11371;
 	listen [::]:11371;
+
+        access_log /var/log/nginx/keyserver/access.log anonymized;
+        error_log /dev/null;
 
 	include snippets/tls/tls-vsund-keyserver.conf;
 	include snippets/hardening/headers-tls.conf;
