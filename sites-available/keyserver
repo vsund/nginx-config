@@ -40,7 +40,6 @@ server {
 
 	root /data/www/keyserver/public_html;
 
-	rewrite ^/stats /pks/lookup?op=stats;
 	rewrite ^/s/(.*) /pks/lookup?search=$1;
 	rewrite ^/search/(.*) /pks/lookup?search=$1;
 	rewrite ^/g/(.*) /pks/lookup?op=get&search=$1;
