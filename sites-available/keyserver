@@ -30,8 +30,8 @@ server {
 	listen 11371;
 	listen [::]:11371;
 
-        access_log /var/log/nginx/keyserver/access.log anonymized;
-        error_log /dev/null;
+	access_log /var/log/nginx/keyserver/access.log anonymized;
+	error_log /dev/null;
 
 	include snippets/tls/tls-vsund-keyserver.conf;
 	include snippets/hardening/headers-tls.conf;
