@@ -31,9 +31,6 @@ server {
 	access_log /var/log/nginx/owncloud/access.log main;
 	error_log /var/log/nginx/owncloud/error.log warn;
 
-	error_page 403 /core/templates/403.php;
-	error_page 404 /core/templates/404.php;
-
 	client_max_body_size 10G;
 	fastcgi_buffers 64 4K;
 
