@@ -36,6 +36,8 @@ server {
 
 	root /data/www/keyserver/public_html;
 
+        index index.php index.html index.htm;
+
 	rewrite ^/s/(.*) /pks/lookup?search=$1;
 	rewrite ^/search/(.*) /pks/lookup?search=$1;
 	rewrite ^/g/(.*) /pks/lookup?op=get&search=$1;
@@ -62,6 +64,8 @@ server {
 	}
 
         include snippets/cache/static.conf;
+
+	include snippets/apps/php-fpm.conf;
 
 	include snippets/hardening/denied-locations.conf;
 }
@@ -89,6 +93,8 @@ server {
 
 	root /data/www/keyserver/public_html;
 
+        index index.php index.html index.htm;
+
 	rewrite ^/s/(.*) /pks/lookup?search=$1;
 	rewrite ^/search/(.*) /pks/lookup?search=$1;
 	rewrite ^/g/(.*) /pks/lookup?op=get&search=$1;
@@ -115,6 +121,8 @@ server {
 	}
 
         include snippets/cache/static.conf;
+
+	include snippets/apps/php-fpm.conf;
 
 	include snippets/hardening/denied-locations.conf;
 }
