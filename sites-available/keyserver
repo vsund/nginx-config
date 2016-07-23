@@ -23,8 +23,8 @@ server {
 	listen 127.0.0.1:80; # tor onion service
 
 	# Reverse proxy for local sks instance
-	listen 11371;
-	listen [::]:11371;
+	listen 163.172.29.20:11371;
+	listen [2001:bc8:2515::1]:11371;
 
 	access_log /var/log/nginx/keyserver/access.log anonymized;
 	error_log /dev/null;
@@ -44,7 +44,7 @@ server {
 	rewrite ^/download/(.*) /pks/lookup?op=get&options=mr&search=$1;
 
 	location /pks {
-		proxy_pass http://127.0.0.1:21371;
+		proxy_pass http://127.0.0.1:11371;
 		proxy_pass_header Server;
 		add_header Via "1.1 keyserver.vsund.de:11371 (nginx)";
 		proxy_ignore_client_abort on;
@@ -76,8 +76,8 @@ server {
 	listen 127.0.0.1:80; # tor onion service
 
 	# Reverse proxy for local sks instance
-	listen 11371;
-	listen [::]:11371;
+        listen 163.172.29.20:11371;
+        listen [2001:bc8:2515::1]:11371;
 
 	access_log /var/log/nginx/keyserver/access.log anonymized;
 	error_log /dev/null;
@@ -97,7 +97,7 @@ server {
 	rewrite ^/download/(.*) /pks/lookup?op=get&options=mr&search=$1;
 
 	location /pks {
-		proxy_pass http://127.0.0.1:21371;
+		proxy_pass http://127.0.0.1:11371;
 		proxy_pass_header Server;
 		add_header Via "1.1 keyserver.vsund.de:11371 (nginx)";
 		proxy_ignore_client_abort on;
