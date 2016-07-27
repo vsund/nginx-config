@@ -38,7 +38,11 @@ server {
 		try_files $uri $uri/ =404;
 	}
 
-	include snippets/apps/goaccess.conf;
+	location /admin/ {
+	        auth_basic "Please authenticate";
+	        auth_basic_user_file private/passwords;
+	}
+
 	include snippets/apps/netdata.conf;
 	include snippets/apps/md.conf;
 	include snippets/apps/php-fpm.conf;
