@@ -16,8 +16,7 @@ server {
 
 server {
 	server_name keyserver.vsund.de
-	            keyserver.valentin-sundermann.de
-	            sfuulriypdms4mnl.onion;
+	            keyserver.valentin-sundermann.de;
 
 	include snippets/misc/listen.conf; # ipv{4,6} + https
 	listen 127.0.0.1:80; # tor onion service
@@ -32,7 +31,8 @@ server {
 	server_name *.sks-keyservers.net
 	            *.pool.sks-keyservers.net
 	            keys.gnupg.net
-	            pgp.ipfire.org;
+	            pgp.ipfire.org
+	            sfuulriypdms4mnl.onion;
 
 	include snippets/misc/listen.conf; # ipv{4,6} + https
 	listen 127.0.0.1:80; # tor onion service
