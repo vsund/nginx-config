@@ -36,7 +36,7 @@ server {
 
 	root /data/www/keyserver/public_html;
 
-        index index.php index.html index.htm;
+	index index.php index.html index.htm;
 
 	rewrite ^/s/(.*) /pks/lookup?search=$1;
 	rewrite ^/search/(.*) /pks/lookup?search=$1;
@@ -63,7 +63,7 @@ server {
 		try_files $uri $uri/ =404;
 	}
 
-        include snippets/cache/static.conf;
+	include snippets/cache/static.conf;
 
 	include snippets/apps/php-fpm.conf;
 
@@ -80,8 +80,8 @@ server {
 	listen 127.0.0.1:80; # tor onion service
 
 	# Reverse proxy for local sks instance
-        listen 163.172.29.20:11371;
-        listen [2001:bc8:2515::1]:11371;
+	listen 163.172.29.20:11371;
+	listen [2001:bc8:2515::1]:11371;
 
 	access_log /var/log/nginx/keyserver/access.log anonymized;
 	error_log /dev/null;
@@ -93,7 +93,7 @@ server {
 
 	root /data/www/keyserver/public_html;
 
-        index index.php index.html index.htm;
+	index index.php index.html index.htm;
 
 	rewrite ^/s/(.*) /pks/lookup?search=$1;
 	rewrite ^/search/(.*) /pks/lookup?search=$1;
@@ -120,7 +120,7 @@ server {
 		try_files $uri $uri/ =404;
 	}
 
-        include snippets/cache/static.conf;
+	include snippets/cache/static.conf;
 
 	include snippets/apps/php-fpm.conf;
 
