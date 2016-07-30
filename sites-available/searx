@@ -1,5 +1,5 @@
 server {
-	server_name test.vsund.de
+	server_name searx.vsund.de
 	            searx.valentin-sundermann.de;
 
 	include snippets/misc/listen-80.conf; # ipv{4,6} + http
