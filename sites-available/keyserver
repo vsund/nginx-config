@@ -1,6 +1,6 @@
 server {
-	server_name keyserver.vsund.de
-	            keyserver.valentin-sundermann.de;
+	server_name keyserver.vsund.de keys.vsund.de
+	            keyserver.valentin-sundermann.de keys.valentin-sundermann.de;
 
 	include snippets/misc/listen-80.conf; # ipv{4,6} + http
 	include snippets/hardening/headers.conf;
