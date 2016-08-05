@@ -19,7 +19,6 @@ server {
 	            keyserver.valentin-sundermann.de keys.valentin-sundermann.de;
 
 	include snippets/misc/listen.conf; # ipv{4,6} + https
-	listen 127.0.0.1:80; # tor onion service
 
 	include snippets/tls/tls-vsund-keyserver.conf;
 	include snippets/hardening/headers-tls.conf;
