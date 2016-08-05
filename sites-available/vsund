@@ -23,6 +23,7 @@ server {
 	include snippets/hardening/headers-tls.conf;
 	include snippets/rewrites/no-www.conf;
 	include snippets/misc/custom-errorpages.conf;
+	include snippets/links/vsund.de;
 
 	root /data/www/vsund/public_html;
 
