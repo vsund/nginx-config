@@ -22,6 +22,7 @@ server {
 
 	include snippets/tls/tls-vsund-keyserver.conf;
 	include snippets/hardening/headers-tls.conf;
+	include snippets/shared/hardening/tls/vsund.conf;
 
 	include snippets/apps/sks.conf;
 }
