@@ -44,7 +44,7 @@ server {
 
 
 	# Laravel / Silex
-	location ~ ^/(ks|kstat|silex|xyz)/ {
+	location ~ ^/(chatty|devdojo|ks|skstat)/ {
 		try_files $uri $uri/ /$1/index.php$is_args$args;
 	}
 }
