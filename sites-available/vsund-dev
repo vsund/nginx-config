@@ -39,8 +39,8 @@ server {
 	}
 
 	location /admin/ {
-	        auth_basic "Please authenticate";
-	        auth_basic_user_file private/passwords;
+		auth_basic "Please authenticate";
+		auth_basic_user_file private/passwords;
 	}
 
 	include snippets/apps/netdata.conf;
