@@ -4,6 +4,7 @@ server {
 
 	include snippets/misc/listen-80.conf; # ipv{4,6} + http
 	include snippets/hardening/headers.conf;
+	include snippets/misc/no-robots.conf;
 	include snippets/misc/acme.conf;
 
 	location / {
@@ -21,6 +22,7 @@ server {
 
 	include snippets/tls/tls-vsund-git.conf;
 	include snippets/hardening/headers-tls.conf;
+	include snippets/misc/no-robots.conf;
 	include snippets/rewrites/no-www.conf;
 
 	location / {
