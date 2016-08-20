@@ -40,6 +40,12 @@ server {
 		add_header Content-Type text/plain;
 	}
 
+        location ~ ^/blockstack/ {
+                default_type application/json;
+                add_header Content-Type application/json;
+		access_log /var/log/nginx/access.log_blockstack main;
+        }
+
 	include snippets/cache/static.conf;
 
 	include snippets/apps/silex-vertretungen.conf;
