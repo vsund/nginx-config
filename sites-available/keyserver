@@ -34,6 +34,7 @@ server {
 	            *.pool.sks-keyservers.net
 	            keys.gnupg.net
 	            pgp.ipfire.org
+	            jirk5u4osbsr34t5.onion
 	            sfuulriypdms4mnl.onion;
 
 	include snippets/misc/listen.conf; # ipv{4,6} + https
