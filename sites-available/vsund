@@ -35,7 +35,7 @@ server {
 		try_files $uri $uri/ =404;
 	}
 
-	location ~ ^/static/keys/ {
+	location /static/keys/ {
 		default_type text/plain;
 		add_header Content-Type text/plain;
 	}
