@@ -40,11 +40,15 @@ server {
 		add_header Content-Type text/plain;
 	}
 
-        location ~ ^/blockstack/ {
-                default_type application/json;
-                add_header Content-Type application/json;
+	location /blockstack-data {
 		access_log /var/log/nginx/access.log_blockstack main;
-        }
+		autoindex on;
+	}
+
+	location ~ ^/blockstack-data/*/*.json {
+		default_type application/json;
+		add_header Content-Type application/json;
+	}
 
 	include snippets/cache/static.conf;
 
