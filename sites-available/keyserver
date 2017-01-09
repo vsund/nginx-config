@@ -16,8 +16,36 @@ server {
 }
 
 server {
-	server_name keyserver.vsund.de keys.vsund.de
-	            keyserver.valentin-sundermann.de keys.valentin-sundermann.de;
+	server_name keys.vsund.de;
+
+	include snippets/misc/listen.conf; # ipv{4,6} + https
+
+	include snippets/tls/tls-vsund-keyserver.conf;
+	include snippets/hardening/headers-tls.conf;
+	include snippets/shared/hardening/tls/vsund.conf;
+
+	location / {
+		return 301 https://keyserver.vsund.de$request_uri;
+	}
+}
+
+server {
+	server_name keys.valentin-sundermann.de;
+
+	include snippets/misc/listen.conf; # ipv{4,6} + https
+
+	include snippets/tls/tls-vsund-keyserver.conf;
+	include snippets/hardening/headers-tls.conf;
+	include snippets/shared/hardening/tls/vsund.conf;
+
+	location / {
+		return 301 https://keyserver.valentin-sundermann.de$request_uri;
+	}
+}
+
+server {
+	server_name keyserver.vsund.de
+	            keyserver.valentin-sundermann.de;
 
 	include snippets/misc/listen.conf; # ipv{4,6} + https
 
