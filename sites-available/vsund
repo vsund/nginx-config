@@ -45,11 +45,6 @@ server {
 		autoindex on;
 	}
 
-	location ~ ^/blockstack-data/*/*.json {
-		default_type application/json;
-		add_header Content-Type application/json;
-	}
-
 	include snippets/cache/static.conf;
 
 	include snippets/apps/silex-vertretungen.conf;
