@@ -41,7 +41,7 @@ server {
 	}
 
 	location /blockstack-data {
-		access_log /var/log/nginx/access.log_blockstack main;
+		access_log /var/log/nginx/access_blockstack.log main;
 		autoindex on;
 	}
 
