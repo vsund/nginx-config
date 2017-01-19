@@ -41,6 +41,10 @@ server {
 	}
 
 	location /admin/ {
+		satisfy any;
+		allow 10.0.1.0/24;
+		deny all;
+
 		auth_basic "Please authenticate";
 		auth_basic_user_file private/passwords;
 	}
