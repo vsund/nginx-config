@@ -1,7 +1,7 @@
-rewrite ^/key https://keyserver.vsund.de/pks/lookup?op=get&search=0xA1AADE57842A21A3;
-rewrite ^/gh https://github.com/vsund;
+rewrite ^/key$ https://keyserver.vsund.de/pks/lookup?op=get&search=0xA1AADE57842A21A3;
+rewrite ^/gh$ https://github.com/vsund;
 
-rewrite ^/sks https://keyserver.vsund.de;
+rewrite ^/sks$ https://keyserver.vsund.de;
 
-rewrite ^/log https://dev.vsund.de/admin/goaccess/;
-rewrite ^/alias https://dev.vsund.de/admin/mail/;
+rewrite ^/log$ https://dev.vsund.de/admin/goaccess/;
+rewrite ^/alias$ https://dev.vsund.de/admin/mail/;
